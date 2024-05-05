@@ -3,13 +3,26 @@ import moment from 'moment';
 import "./task.css";
 import { useContext } from 'react';
 import TaskContext from '../../context/TaskContext';
+import TokenContext from '../../context/TokenContext';
+import axios from "../../Axios/axios.js"
 import DeleteIcon from '@mui/icons-material/Delete';
 function Task({ task, id }) {
     const { dispatch } = useContext(TaskContext);
+    const { userToken } = useContext(TokenContext);
 
-    const handleRemove = (e) => {
+    const handleRemove = async (e) => {
         e.preventDefault();
-        
+        try {
+            const res = await axios.post("/task/removeTask",{id: task._id} ,{
+                headers: {
+                    Authorization: `Bearer ${userToken}`
+                }
+            })
+            //setToast(res.data)
+            // showToast();
+        } catch (error) {
+            console.log(error);
+        }
 
         dispatch({
             type: "REMOVE_TASK",
@@ -29,7 +42,8 @@ function Task({ task, id }) {
                 <input type="checkbox" className="checkbox" onChange={handleMarkDone} checked={task.completed} />
             </div>
             <div className="task-info text-slate-900 text-sm w-10/12">
-                <h4 className="task-title text-lg capitalize">{task.title}</h4>
+                <h4 className="task-title text-lg capitalize"><b>{task.title}</b> &nbsp; ₹{task.spend} &nbsp; {task.date} </h4>
+                {/* <h4 className="task-title text-lg capitalize">₹{task.spend} &nbsp; {task.date} </h4> */}
                 <p className="task-description">{task.description}</p>
                 <div className=' italic opacity-60'>
                     {

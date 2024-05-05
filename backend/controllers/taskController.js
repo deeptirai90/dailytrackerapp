@@ -13,10 +13,10 @@ const sendMail = (email, subject, title, description) => {
     });
 
     var mailOptions = {
-        from: 'alok.yadav6000@gmail.com',
+        from: 'acsatyam@gmail.com',
         to: email,
         subject: subject,
-        html:`<h1>Task added successfully</h1><h2>Title: ${title}</h2><h3>Description: ${description}</h3>`
+        html: `<h1>Task added successfully</h1><h2>Title: ${title}</h2><h3>Description: ${description}</h3>`
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -28,13 +28,13 @@ const sendMail = (email, subject, title, description) => {
     });
 }
 const addTask = async (req, res) => {
-    const { title, description } = req.body;
+    const { title, spend, date, description } = req.body;
     const userId = req.user.id;
-    const user = await userModel.find({_id: userId});
-    const newTask = new taskModel({ title, description, completed: false, userId })
+    const user = await userModel.find({ _id: userId });
+    const newTask = new taskModel({ title, spend, date, description, completed: false, userId })
     newTask.save()
         .then(() => {
-            sendMail(user[0].email, "Task Added", title, description)
+            sendMail(user[0].email, "Task Added", title, spend, date, description)
             return (res.status(200).json({ message: "Task added successfully" }))
         })
         .catch((error) => {
@@ -57,4 +57,4 @@ const getTask = (req, res) => {
         .then((data) => res.status(200).json(data))
         .catch((error) => res.status(501).json({ message: error.message }))
 }
-export { addTask, getTask,removeTask }
+export { addTask, getTask, removeTask }

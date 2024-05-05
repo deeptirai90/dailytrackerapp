@@ -6,7 +6,6 @@ import "./header.css"
 function Header() {
     const token = localStorage.getItem("authToken");
     const { user } = useContext(TokenContext);
-    console.log("user", user);
     const logout = () => {
         localStorage.removeItem("authToken");
         window.location.href = "/login";
@@ -16,7 +15,7 @@ function Header() {
         <div>
             <nav className='header bg-slate-200 flex justify-between items-center'>
                 <div className="logo w-1/4 text-center">
-                    <NavLink to="/">Todo App</NavLink>
+                    <NavLink className="logo-border active" to="/">Daily Tracker App</NavLink>
                 </div>
                 <div className='flex justify-between'>
                     {

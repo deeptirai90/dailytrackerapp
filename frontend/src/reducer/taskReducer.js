@@ -1,5 +1,4 @@
 function taskReducer(tasks, action) {
-    console.log("taskreducer");
     switch (action.type) {
         // eslint-disable-next-line no-lone-blocks
         case "ADD_TASK": {
@@ -7,6 +6,8 @@ function taskReducer(tasks, action) {
                 ...tasks,
                 {
                     title: action.title,
+                    spend: action.spend,
+                    date: action.date,
                     description: action.description,
                     completed: false
                 }

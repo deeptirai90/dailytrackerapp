@@ -1,3 +1,9 @@
-.header{
+.header {
     height: 7vh;
+}
+
+.logo-border {
+    font-weight: 600;
+    border: 2px solid blue;
+    padding: 10px;
 }
